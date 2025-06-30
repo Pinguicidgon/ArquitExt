@@ -6,7 +6,9 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { resolvers } from "./resolvers.ts";
 import "https://deno.land/x/dotenv/load.ts";
 
-const MONGO_URL = Deno.env.get("MONGO_URL");
+//const MONGO_URL = Deno.env.get("MONGO_URL");
+const MONGO_URL = "mongodb+srv://otheruser:123456aaabbb@nebrija-cluster.ad1qt.mongodb.net/?retryWrites=true&w=majority&appName=Nebrija-Cluster";
+
 
 if (!MONGO_URL) {
   throw new Error("MONGO_URL is not defined");
