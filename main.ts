@@ -1,27 +1,7 @@
 import { ApolloServer } from "@apollo/server";
-import { typeDefs } from "./schema.ts";
-import { MongoClient } from "mongodb";
-import { RestaurantModel } from "./types.ts";
 import { startStandaloneServer } from "@apollo/server/standalone";
+import { typeDefs } from "./schema.ts";
 import { resolvers } from "./resolvers.ts";
-import "https://deno.land/x/dotenv/load.ts";
-
-//const MONGO_URL = Deno.env.get("MONGO_URL");
-const MONGO_URL = "mongodb+srv://otheruser:123456aaabbb@nebrija-cluster.ad1qt.mongodb.net/?retryWrites=true&w=majority&appName=Nebrija-Cluster";
-
-
-if (!MONGO_URL) {
-  throw new Error("MONGO_URL is not defined");
-}
-
-const mongoClient = new MongoClient(MONGO_URL);
-await mongoClient.connect();
-
-console.info("Connected to MongoDB");
-
-const mongoDB = mongoClient.db("ExamenExtraordinario2425");
-const ResturantsCollection =
-  mongoDB.collection<RestaurantModel>("restaurantes");
 
 const server = new ApolloServer({
   typeDefs,
@@ -29,7 +9,7 @@ const server = new ApolloServer({
 });
 
 const { url } = await startStandaloneServer(server, {
-  context: async () => ({ ResturantsCollection }),
+  listen: { port: 8000 },
 });
 
-console.info(`Server ready at ${url}`);
+console.log(`Servidor graphql disponible en ${url}`);
